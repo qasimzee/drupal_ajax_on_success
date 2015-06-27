@@ -1,5 +1,5 @@
 name = Drupal custom ajax call
-description = Drupal custom AJAX calls for test
+description = A simple drupal (example) module to execute a JS function after success ajax call
 package = Custom
 core = 7.x
 
