@@ -1,0 +1,5 @@
+name = Drupal custom ajax call
+description = Drupal custom AJAX calls for test
+package = Custom
+core = 7.x
+

@@ -1,0 +1,45 @@
+<?php
+
+
+/**
+ * Implements hook_menu().
+ */
+function drupal_custom_ajax_menu() {
+  $items = array();
+  $items['test_page_ajax'] = array(
+    'title' => 'Text AJAX page',
+    'description' => 'Simple ajax page',
+    'page callback' => 'drupal_custom_ajax_test_ajax',
+    'access arguments' => array('access content'),
+    'weight' => -1,
+  );
+
+  $items['test_ajax_call'] = array(
+    'title' => 'Text AJAX page',
+    'description' => 'Simple ajax callback',
+    'page callback' => 'drupal_custom_ajax_test_ajax_call',
+    'access arguments' => array('access content'),
+    'weight' => -1,
+  );
+  return $items;
+}
+
+function drupal_custom_ajax_test_ajax() {
+  drupal_add_js(drupal_get_path('module', 'drupal_custom_ajax') . '/drupal_custom_ajax.js');
+  drupal_add_library('system', 'drupal.ajax');
+  return l('Click this AJAX link', 'test_ajax_call', array('attributes' => array('class' => 'use-ajax')));
+}
+
+function drupal_custom_ajax_test_ajax_call() {
+  drupal_set_message('AJAX call received');
+  $commands = array();
+
+  $commands[] = array('command' => 'myJSFunction'); 
+  $commands[] = ajax_command_after('#main-content', theme('status_messages'));  
+  $page = array(
+    '#type' => 'ajax',
+    '#commands' => $commands,
+  );
+  
+  ajax_deliver($page);
+}
